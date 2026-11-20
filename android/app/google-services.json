@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "991225956554",
+    "project_id": "proyecto-moviles-dam2026",
+    "storage_bucket": "proyecto-moviles-dam2026.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:991225956554:android:02f750c100c77a93d54c33",
+        "android_client_info": {
+          "package_name": "cl.dijaz.proyectodam"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATI9RCgXz2qbNXEHQjqF9itFgs2vEEyyo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
