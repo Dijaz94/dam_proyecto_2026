@@ -1,4 +1,4 @@
-import 'package:dam_proyecto_2026/pages/login.dart';
+import 'package:dam_proyecto_2026/pages/auth_wrapper.dart';
 import 'package:dam_proyecto_2026/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: usmTheme,
-      home: const Login(),
+      home: const AuthWrapper(),
     );
   }
 }

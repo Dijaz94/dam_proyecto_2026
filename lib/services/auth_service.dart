@@ -46,4 +46,10 @@ class AuthService {
       rethrow;
     }
   }
+
+  Future<void> signOut() async {
+    await _ensureInitialized();
+    await _googleSignIn.signOut();
+    await _auth.signOut();
+  }
 }
