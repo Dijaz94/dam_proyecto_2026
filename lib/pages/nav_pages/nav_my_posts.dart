@@ -10,6 +10,6 @@ class NavMyPosts extends StatefulWidget {
 class _NavMyPostsState extends State<NavMyPosts> {
   @override
   Widget build(BuildContext context) {
-    return Container(child: Text('Mis Posts'));
+    return Center(child: Text('Mis Posts'));
   }
 }

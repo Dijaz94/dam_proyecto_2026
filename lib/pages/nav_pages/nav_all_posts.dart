@@ -10,6 +10,6 @@ class NavAllPosts extends StatefulWidget {
 class _NavAllPostsState extends State<NavAllPosts> {
   @override
   Widget build(BuildContext context) {
-    return Container(child: Text('Todos los Posts'));
+    return Center(child: Text('Todos los Posts'));
   }
 }

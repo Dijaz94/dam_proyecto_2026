@@ -10,6 +10,6 @@ class NavUpload extends StatefulWidget {
 class _NavUploadState extends State<NavUpload> {
   @override
   Widget build(BuildContext context) {
-    return Container(child: Text('Subir Post'));
+    return Center(child: Text('Subir Post'));
   }
 }
