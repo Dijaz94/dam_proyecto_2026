@@ -36,4 +36,8 @@ class FsService {
       'autorCorreo': autor.email,
     });
   }
+
+  Stream<QuerySnapshot> publicaciones() {
+    return FirebaseFirestore.instance.collection('publicaciones').snapshots();
+  }
 }

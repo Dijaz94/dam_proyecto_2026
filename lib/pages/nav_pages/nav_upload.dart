@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:dam_proyecto_2026/services/fs_service.dart';
 import 'package:dam_proyecto_2026/theme.dart';
 import 'package:dam_proyecto_2026/utils/fechas.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
 import 'package:image_picker/image_picker.dart';
@@ -30,6 +29,14 @@ class _NavUploadState extends State<NavUpload> {
 
   DateTime fechaHoraSeleccionada = DateTime.now();
   Uint8List? fotoBytes;
+
+  @override
+  void dispose() {
+    tituloCtrl.dispose();
+    descripcionCtrl.dispose();
+    lugarCtrl.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -72,6 +79,12 @@ class _NavUploadState extends State<NavUpload> {
                           labelText: 'Título',
                           border: OutlineInputBorder(),
                         ),
+                        validator: (valor) {
+                          if (valor == null || valor.trim().isEmpty) {
+                            return 'Este campo es obligatorio';
+                          }
+                          return null;
+                        },
                       ),
                       SizedBox(height: 20),
                       TextFormField(
@@ -80,49 +93,80 @@ class _NavUploadState extends State<NavUpload> {
                           labelText: 'Descripción',
                           border: OutlineInputBorder(),
                         ),
-                      ),
-                      SizedBox(height: 20),
-                      DropdownButtonFormField<String>(
-                        decoration: InputDecoration(
-                          labelText: 'Tipo',
-                          border: OutlineInputBorder(),
-                        ),
-                        items: tipos
-                            .map(
-                              (tipo) => DropdownMenuItem(
-                                value: tipo,
-                                child: Text(tipo),
-                              ),
-                            )
-                            .toList(),
-                        onChanged: (tipo) => tipoSeleccionado = tipo,
-                      ),
-                      SizedBox(height: 20),
-                      FutureBuilder(
-                        future: _categotiasFuture,
-                        builder: (context, snapshot) {
-                          if (!snapshot.hasData ||
-                              snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                            return Center(child: CircularProgressIndicator());
+                        validator: (valor) {
+                          if (valor == null || valor.trim().isEmpty) {
+                            return 'Este campo es obligatorio';
                           }
-                          var categorias = snapshot.data;
-                          return DropdownButtonFormField(
-                            decoration: InputDecoration(
-                              labelText: 'Categorías',
-                              border: OutlineInputBorder(),
-                            ),
-                            items: categorias!
-                                .map(
-                                  (cat) => DropdownMenuItem(
-                                    value: cat,
-                                    child: Text(cat),
-                                  ),
-                                )
-                                .toList(),
-                            onChanged: (cat) => categoriaSeleccionada = cat,
-                          );
+                          return null;
                         },
+                      ),
+                      SizedBox(height: 20),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: DropdownButtonFormField<String>(
+                              isExpanded: true,
+                              decoration: InputDecoration(
+                                labelText: 'Tipo',
+                                border: OutlineInputBorder(),
+                              ),
+                              items: tipos
+                                  .map(
+                                    (tipo) => DropdownMenuItem(
+                                      value: tipo,
+                                      child: Text(tipo),
+                                    ),
+                                  )
+                                  .toList(),
+                              onChanged: (tipo) => tipoSeleccionado = tipo,
+                              validator: (valor) {
+                                if (valor == null || valor.trim().isEmpty) {
+                                  return 'Este campo es obligatorio';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                          SizedBox(width: 20),
+                          Expanded(
+                            child: FutureBuilder(
+                              future: _categotiasFuture,
+                              builder: (context, snapshot) {
+                                if (!snapshot.hasData ||
+                                    snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                  return Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }
+                                var categorias = snapshot.data;
+                                return DropdownButtonFormField(
+                                  isExpanded: true,
+                                  decoration: InputDecoration(
+                                    labelText: 'Categorías',
+                                    border: OutlineInputBorder(),
+                                  ),
+                                  items: categorias!
+                                      .map(
+                                        (cat) => DropdownMenuItem(
+                                          value: cat,
+                                          child: Text(cat),
+                                        ),
+                                      )
+                                      .toList(),
+                                  onChanged: (cat) =>
+                                      categoriaSeleccionada = cat,
+                                  validator: (valor) {
+                                    if (valor == null || valor.trim().isEmpty) {
+                                      return 'Selecciona un valor';
+                                    }
+                                    return null;
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox(height: 20),
                       TextFormField(
@@ -131,6 +175,12 @@ class _NavUploadState extends State<NavUpload> {
                           labelText: 'Lugar',
                           border: OutlineInputBorder(),
                         ),
+                        validator: (valor) {
+                          if (valor == null || valor.trim().isEmpty) {
+                            return 'Este campo es obligatorio';
+                          }
+                          return null;
+                        },
                       ),
                       SizedBox(height: 20),
                       Row(
@@ -215,88 +265,154 @@ class _NavUploadState extends State<NavUpload> {
                         ],
                       ),
                       SizedBox(height: 20),
-                      Row(
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Imagen: '),
-                          Spacer(),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                            ),
-                            onPressed: () async {
-                              final archivo = await ImagePicker().pickImage(
-                                source: ImageSource.camera,
-                                maxHeight: 1024,
-                                maxWidth: 1024,
-                              );
+                          Text('Imagen:'),
+                          SizedBox(height: 8),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: ElevatedButton.icon(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.white,
+                                  ),
+                                  onPressed: () async {
+                                    final archivo = await ImagePicker()
+                                        .pickImage(
+                                          source: ImageSource.camera,
+                                          maxHeight: 1024,
+                                          maxWidth: 1024,
+                                        );
 
-                              if (archivo == null) return;
+                                    if (archivo == null) return;
 
-                              final bytes = await archivo.readAsBytes();
-                              if (!mounted) return;
+                                    final bytes = await archivo.readAsBytes();
+                                    if (!mounted) return;
 
-                              // Para ver que no pese mas de 1 mega
-                              if (bytes.length > 900 * 1024) return;
+                                    // Para ver que no pese mas de 1 mega
+                                    if (bytes.length > 900 * 1024) return;
 
-                              setState(() {
-                                fotoBytes = bytes;
-                              });
-                            },
-                            child: Text('Tomar foto'),
-                          ),
-                          SizedBox(width: 10),
+                                    setState(() {
+                                      fotoBytes = bytes;
+                                    });
+                                  },
+                                  icon: Icon(MdiIcons.camera),
+                                  label: Text(
+                                    'Tomar foto',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              Expanded(
+                                child: ElevatedButton.icon(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.white,
+                                  ),
+                                  onPressed: () async {
+                                    final archivo = await ImagePicker()
+                                        .pickImage(
+                                          source: ImageSource.gallery,
+                                          maxHeight: 1024,
+                                          maxWidth: 1024,
+                                        );
 
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                            ),
-                            onPressed: () async {
-                              final archivo = await ImagePicker().pickImage(
-                                source: ImageSource.gallery,
-                                maxHeight: 1024,
-                                maxWidth: 1024,
-                              );
+                                    if (archivo == null) return;
 
-                              if (archivo == null) return;
+                                    final bytes = await archivo.readAsBytes();
+                                    if (!mounted) return;
 
-                              final bytes = await archivo.readAsBytes();
-                              if (!mounted) return;
+                                    // Para ver que no pese mas de 1 mega
+                                    if (bytes.length > 900 * 1024) return;
 
-                              // Para ver que no pese mas de 1 mega
-                              if (bytes.length > 900 * 1024) return;
-
-                              setState(() {
-                                fotoBytes = bytes;
-                              });
-                            },
-                            child: Text('Elegir Imagen'),
+                                    setState(() {
+                                      fotoBytes = bytes;
+                                    });
+                                  },
+                                  icon: Icon(MdiIcons.image),
+                                  label: Text(
+                                    'Galería',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
                       SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: () async {
-                          try {
-                            fechaHoraSeleccionada = DateTime(
-                              fechaSeleccionada.year,
-                              fechaSeleccionada.month,
-                              fechaSeleccionada.day,
-                              horaSeleccionada.hour,
-                              horaSeleccionada.minute,
-                            );
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: UsmColors.dorado,
+                            elevation: 3,
+                            textStyle: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          onPressed: () async {
+                            if (!formKey.currentState!.validate()) return;
 
-                            await FsService().agregarPublicacion(
-                              tituloCtrl.text.trim(),
-                              descripcionCtrl.text.trim(),
-                              tipoSeleccionado!,
-                              categoriaSeleccionada!,
-                              lugarCtrl.text.trim(),
-                              fechaHoraSeleccionada,
-                              fotoBytes!,
-                            );
-                          } catch (error) {}
-                        },
-                        child: Text('Publicar'),
+                            // 2. Valida que haya imagen antes de usar fotoBytes!
+                            if (fotoBytes == null) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                    'Debes seleccionar o tomar una foto',
+                                  ),
+                                ),
+                              );
+                              return;
+                            }
+
+                            try {
+                              fechaHoraSeleccionada = DateTime(
+                                fechaSeleccionada.year,
+                                fechaSeleccionada.month,
+                                fechaSeleccionada.day,
+                                horaSeleccionada.hour,
+                                horaSeleccionada.minute,
+                              );
+
+                              await FsService().agregarPublicacion(
+                                tituloCtrl.text.trim(),
+                                descripcionCtrl.text.trim(),
+                                tipoSeleccionado!,
+                                categoriaSeleccionada!,
+                                lugarCtrl.text.trim(),
+                                fechaHoraSeleccionada,
+                                fotoBytes!,
+                              );
+                              tituloCtrl.clear();
+                              descripcionCtrl.clear();
+                              lugarCtrl.clear();
+                              formKey.currentState?.reset();
+
+                              setState(() {
+                                tipoSeleccionado = null;
+                                categoriaSeleccionada = null;
+                                fotoBytes = null;
+                                fechaSeleccionada = DateTime.now();
+                                horaSeleccionada = DateTime.now();
+                              });
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                    'Publicación subida exitosamente',
+                                  ),
+                                  backgroundColor: UsmColors.azulClaro,
+                                ),
+                              );
+                            } catch (error) {}
+                          },
+                          child: Text('Publicar'),
+                        ),
                       ),
                     ],
                   ),
