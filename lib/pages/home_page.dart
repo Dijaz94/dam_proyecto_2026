@@ -24,11 +24,38 @@ class _HomePageState extends State<HomePage> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              AuthService.instance.currentUser?.displayName ?? 'unknown',
-              style: TextStyle(fontSize: 18),
+            Flexible(
+              child: Text(
+                AuthService.instance.currentUser?.displayName ?? 'unknown',
+                style: const TextStyle(fontSize: 18),
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
             Image.asset('lib/assets/logo-usm.png', height: 40),
+            if (_paginaSeleccionada == 2)
+              InkWell(
+                onTap: AuthService.instance.signOut,
+                borderRadius: BorderRadius.circular(8),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 6,
+                    vertical: 4,
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(MdiIcons.logout, size: 22),
+                      const Text(
+                        'Cerrar sesión',
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
           ],
         ),
       ),

@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dam_proyecto_2026/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FsService {

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dam_proyecto_2026/services/auth_service.dart';
 import 'package:dam_proyecto_2026/services/fs_service.dart';
 import 'package:flutter/material.dart';
 
