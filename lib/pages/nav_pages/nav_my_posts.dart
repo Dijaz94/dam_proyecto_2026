@@ -63,7 +63,7 @@ class _NavMyPostsState extends State<NavMyPosts> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: FsService().publicaciones(),
+      stream: FsService().misPublicaciones(),
       builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (!snapshot.hasData ||
             snapshot.connectionState == ConnectionState.waiting) {
