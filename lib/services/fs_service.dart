@@ -48,4 +48,18 @@ class FsService {
         .where('autorCorreo', isEqualTo: correo)
         .snapshots();
   }
+
+  Future<void> cambiarEstado(String id, String nuevoEstado) {
+    return FirebaseFirestore.instance
+        .collection('publicaciones')
+        .doc(id)
+        .update({'estado': nuevoEstado});
+  }
+
+  Future<void> eliminarPublicacion(String id) {
+    return FirebaseFirestore.instance
+        .collection('publicaciones')
+        .doc(id)
+        .delete();
+  }
 }
