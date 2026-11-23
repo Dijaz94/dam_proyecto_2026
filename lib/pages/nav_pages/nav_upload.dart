@@ -291,10 +291,32 @@ class _NavUploadState extends State<NavUpload> {
                                     if (!mounted) return;
 
                                     // Para ver que no pese mas de 1 mega
-                                    if (bytes.length > 900 * 1024) return;
+                                    if (bytes.length > 900 * 1024) {
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                            'Error, el archivo pesa más de 1Mb.',
+                                          ),
+                                          backgroundColor: UsmColors.azulClaro,
+                                        ),
+                                      );
+                                      return;
+                                    }
 
                                     setState(() {
                                       fotoBytes = bytes;
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                            'Imagen subida exitosamente.',
+                                          ),
+                                          backgroundColor: UsmColors.azulClaro,
+                                        ),
+                                      );
                                     });
                                   },
                                   icon: Icon(MdiIcons.camera),
@@ -325,10 +347,32 @@ class _NavUploadState extends State<NavUpload> {
                                     if (!mounted) return;
 
                                     // Para ver que no pese mas de 1 mega
-                                    if (bytes.length > 900 * 1024) return;
+                                    if (bytes.length > 900 * 1024) {
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                            'Error, el archivo pesa más de 1Mb.',
+                                          ),
+                                          backgroundColor: UsmColors.azulClaro,
+                                        ),
+                                      );
+                                      return;
+                                    }
 
                                     setState(() {
                                       fotoBytes = bytes;
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                            'Imagen subida exitosamente.',
+                                          ),
+                                          backgroundColor: UsmColors.azulClaro,
+                                        ),
+                                      );
                                     });
                                   },
                                   icon: Icon(MdiIcons.image),
