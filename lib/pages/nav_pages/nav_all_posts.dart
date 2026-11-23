@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dam_proyecto_2026/pages/detalle.dart';
 import 'package:dam_proyecto_2026/services/fs_service.dart';
 import 'package:dam_proyecto_2026/theme.dart';
 import 'package:flutter/material.dart';
@@ -53,6 +54,12 @@ class _NavAllPostsState extends State<NavAllPosts> {
                   : Text(publicacion['categoria']),
               onTap: () {
                 // Aquí puedes abrir un detalle o diálogo si quieres
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Detalle(publicacion: publicacion),
+                  ),
+                );
               },
             );
           },
