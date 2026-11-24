@@ -294,7 +294,7 @@ class _NavUploadState extends State<NavUpload> {
                                     if (archivo == null) return;
 
                                     final bytes = await archivo.readAsBytes();
-                                    if (!mounted) return;
+                                    if (!context.mounted) return;
 
                                     // Para ver que no pese mas de 1 mega
                                     if (bytes.length > 900 * 1024) {
@@ -350,7 +350,7 @@ class _NavUploadState extends State<NavUpload> {
                                     if (archivo == null) return;
 
                                     final bytes = await archivo.readAsBytes();
-                                    if (!mounted) return;
+                                    if (!context.mounted) return;
 
                                     // Para ver que no pese mas de 1 mega
                                     if (bytes.length > 900 * 1024) {
@@ -442,7 +442,7 @@ class _NavUploadState extends State<NavUpload> {
                               descripcionCtrl.clear();
                               lugarCtrl.clear();
                               formKey.currentState?.reset();
-
+                              if (!context.mounted) return;
                               setState(() {
                                 tipoSeleccionado = null;
                                 categoriaSeleccionada = null;
@@ -459,7 +459,14 @@ class _NavUploadState extends State<NavUpload> {
                                   backgroundColor: UsmColors.azulClaro,
                                 ),
                               );
-                            } catch (error) {}
+                            } catch (error) {
+                              if (!context.mounted) return;
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Error al publicar: $error'),
+                                ),
+                              );
+                            }
                           },
                           child: Text('Publicar'),
                         ),
