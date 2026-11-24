@@ -19,8 +19,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: UsmColors.crema,
-        foregroundColor: UsmColors.azulOscuro,
+        backgroundColor: UsmColors.azul,
+        foregroundColor: Colors.white,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            Image.asset('lib/assets/logo-usm.png', height: 40),
+            Image.asset('lib/assets/Logo_UTFSM.png', height: 40),
             if (_paginaSeleccionada == 2)
               InkWell(
                 onTap: AuthService.instance.signOut,

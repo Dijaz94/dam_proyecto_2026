@@ -216,7 +216,10 @@ class _NavUploadState extends State<NavUpload> {
                                 }
                               });
                             },
-                            icon: Icon(MdiIcons.calendarEdit),
+                            icon: Icon(
+                              MdiIcons.calendarEdit,
+                              color: UsmColors.rojo,
+                            ),
                           ),
                         ],
                       ),
@@ -260,7 +263,10 @@ class _NavUploadState extends State<NavUpload> {
                                 }
                               });
                             },
-                            icon: Icon(MdiIcons.clockOutline),
+                            icon: Icon(
+                              MdiIcons.clockOutline,
+                              color: UsmColors.rojo,
+                            ),
                           ),
                         ],
                       ),
