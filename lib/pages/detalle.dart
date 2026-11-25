@@ -12,7 +12,7 @@ class Detalle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Blob fotoBlob = publicacion['foto'] as Blob;
-
+    final data = publicacion.data() as Map<String, dynamic>;
     return Scaffold(
       backgroundColor: UsmColors.azulClaro,
       body: Padding(
@@ -36,7 +36,7 @@ class Detalle extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        publicacion['titulo'],
+                        data['titulo'],
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 28,
@@ -45,7 +45,7 @@ class Detalle extends StatelessWidget {
                       ),
                       SizedBox(height: 5),
                       Text(
-                        publicacion['descripcion'],
+                        data['descripcion'],
                         style: TextStyle(
                           fontSize: 18,
                           color: UsmColors.azulOscuro,
@@ -63,7 +63,7 @@ class Detalle extends StatelessWidget {
                                 Radius.circular(20),
                               ),
                             ),
-                            child: Text(publicacion['tipo']),
+                            child: Text(data['tipo']),
                           ),
                           SizedBox(width: 5),
                           Container(
@@ -74,13 +74,13 @@ class Detalle extends StatelessWidget {
                                 Radius.circular(20),
                               ),
                             ),
-                            child: Text(publicacion['categoria']),
+                            child: Text(data['categoria']),
                           ),
                           SizedBox(width: 5),
                           Container(
                             padding: EdgeInsets.fromLTRB(8, 6, 8, 6),
                             decoration: BoxDecoration(
-                              color: publicacion['estado'] == 'Vigente'
+                              color: data['estado'] == 'Vigente'
                                   ? UsmColors.rojo
                                   : UsmColors.verde,
                               borderRadius: BorderRadius.all(
@@ -88,7 +88,7 @@ class Detalle extends StatelessWidget {
                               ),
                             ),
                             child: Text(
-                              publicacion['estado'],
+                              data['estado'],
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -110,7 +110,7 @@ class Detalle extends StatelessWidget {
                                 SizedBox(width: 5),
 
                                 Text(
-                                  'Fecha: ${formateadaFechaApi(publicacion['fechaHora'])} - ${formateadaHoraApi(publicacion['fechaHora'])}',
+                                  'Fecha: ${formateadaFechaApi(data['fechaHora'])} - ${formateadaHoraApi(data['fechaHora'])}',
                                 ),
                               ],
                             ),
@@ -119,7 +119,7 @@ class Detalle extends StatelessWidget {
                               children: [
                                 Icon(MdiIcons.mapMarkerOutline),
                                 SizedBox(width: 5),
-                                Text('Lugar: ${publicacion['lugar']}'),
+                                Text('Lugar: ${data['lugar']}'),
                               ],
                             ),
                             SizedBox(height: 5),
@@ -127,7 +127,7 @@ class Detalle extends StatelessWidget {
                               children: [
                                 Icon(MdiIcons.emailOutline),
                                 SizedBox(width: 5),
-                                Text('Autor: ${publicacion['autorCorreo']}'),
+                                Text('Autor: ${data['autor'] ?? 'unknown'}'),
                               ],
                             ),
                           ],

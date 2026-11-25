@@ -34,6 +34,7 @@ class FsService {
       'fechaHora': fechaHora,
       'foto': Blob(foto),
       'autorCorreo': autor.email,
+      'autor': autor.displayName,
     });
   }
 
