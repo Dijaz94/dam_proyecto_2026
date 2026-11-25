@@ -32,11 +32,10 @@ class _NavAllPostsState extends State<NavAllPosts> {
             final Blob fotoBlob = publicacion['foto'] as Blob;
 
             return ListTile(
-              tileColor: esDevuelto
-                  ? Colors.grey.shade200
-                  : null, // o UsmColors.verde.withValues(alpha: 0.08)
+              tileColor: esDevuelto ? Colors.grey.shade200 : null,
 
               leading: ClipRRect(
+                //widget para recortar hijo de forma rectangular con esquinas redondeadas
                 borderRadius: BorderRadius.circular(8),
                 child: Image.memory(
                   fotoBlob.bytes,
@@ -47,11 +46,23 @@ class _NavAllPostsState extends State<NavAllPosts> {
               ),
               title: Text(publicacion['titulo']),
               subtitle: Text(
-                '${publicacion['tipo']} • ${publicacion['lugar']}',
+                '${publicacion['tipo']} • ${publicacion['categoria']} • ${publicacion['lugar']}',
               ),
-              trailing: esDevuelto
-                  ? const Icon(Icons.check_circle, color: UsmColors.verde)
-                  : Text(publicacion['categoria']),
+              trailing: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: esDevuelto ? UsmColors.verde : UsmColors.rojo,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  publicacion['estado'],
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
               onTap: () {
                 // Aquí puedes abrir un detalle o diálogo si quieres
                 Navigator.push(
